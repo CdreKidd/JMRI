@@ -226,6 +226,18 @@
       <family name="No Decoder" mfg="No Decoder" file="0NoDecoder.xml">
         <model model="No Decoder" />
       </family>
+   <family name="AE Models Loco Decoders" mfg="AE Electronic Ltd" file="AE_Models.xml">
+      <model model="AED-8PH 4 Function" numOuts="4" numFns="20" maxMotorCurrent="0.75A (peak=1A)">
+        <output name="FoF" label="White" connection="solder" maxcurrent="100 mA"/> <!-- CV49-->
+        <output name="FoR" label="Yellow" connection="solder" maxcurrent="100 mA"/><!-- CV50-->
+        <output name="F1" label="Green" connection="solder" maxcurrent="100 mA"/><!-- CV51-->
+        <output name="F2" label="Purple" connection="solder" maxcurrent="100 mA"/><!-- CV52-->
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/><!-- CV61-->
+      </model>
+      </family>                                                                                 
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
           <output name="1" label="White" />
@@ -1354,6 +1366,20 @@
           <!-- virtual "output" -->
         </model>
       </family>
+      <family name="DCC Concepts Zen Black" mfg="DCCconcepts" lowVersionID="34" highVersionID="35" file="DCC_Concepts_Zen_ABC.xml">
+      <model model="Zen Mini.4 Black" numOuts="4" numFns="14" maxMotorCurrent="0.750A (peak=1.1A)" productID="Z218" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, 8 pin NEM652 harness">
+        <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA"/>
+        <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA"/>
+        <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA"/>
+        <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
+        <output name="8" label="Ditch|Blink"/>		<!-- virtual "output" -->
+        <output name="9" label="Motor|Control"/>	<!-- virtual "output" -->
+        <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
+        <size length="22" width="16" height="4.5" units="mm"/>
+      </model>
+ 
+    </family>
       <family name="Imperium Decoders" mfg="Dapol Limited" comment="Dapol Imperium decoder range" lowVersionID="04" highVersionID="06" file="Dapol.xml">
         <model model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" comment="HO/N-scale, with Next18 plug">
           <output name="1" label="White|Pin 8" />
@@ -9072,7 +9098,7 @@
             <functionlabel num="22" lockable="false">Whistle Very Short Alternative</functionlabel>
           </functionlabels>
         </model>
-        <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" productID="2699">
+        <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" productID="2955">
           <versionCV lowVersionID="10" highVersionID="120" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
@@ -9468,6 +9494,82 @@
           </functionlabels>
         </model>
       </family>
+ <family name="Hornby TXS Steam" mfg="Hornby" comment="" file="HornbyTXS.xml">
+         <model model="Hornby TXS 9F 2-10-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="26">
+                <versionCV lowVersionID="10" highVersionID="120"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+                <functionlabels>
+				<functionlabel num="0" lockable="true">Lights</functionlabel>
+				<functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+				<functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+				<functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+				<functionlabel num="4" lockable="false">Brake</functionlabel>				
+                <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+                <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+                <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+				<functionlabel num="8" lockable="true">Injector</functionlabel>
+				<functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+				<functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+				<functionlabel num="11" lockable="false">Coupling</functionlabel>				
+                <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>	
+                <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+				<functionlabel num="14" lockable="true">Blower</functionlabel>
+                <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+				<functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                <functionlabel num="17" lockable="true">Blow Down</functionlabel>				
+				<functionlabel num="18" lockable="false">Water Fill</functionlabel>
+				<functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+				<functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+				<functionlabel num="21" lockable="true">Aux 1</functionlabel>
+				<functionlabel num="22" lockable="true">Aux 2</functionlabel>
+				<functionlabel num="23" lockable="true">Aux 3</functionlabel>
+				<functionlabel num="24" lockable="true">Aux 4</functionlabel>
+				<functionlabel num="25" lockable="true">Activate Creep Mode</functionlabel>
+				<functionlabel num="26" lockable="true">Activate Coupling Mode</functionlabel>
+				<functionlabel num="27" lockable="false">Dynamic Brake</functionlabel>
+				<functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+			</functionlabels>
+            </model>
+            <model model="Hornby TXS 5MT Black 5 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="29">
+                <versionCV lowVersionID="10" highVersionID="132"/>
+                <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
+                <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
+                <output name="Aux" label="Gr" maxcurrent="0.1A"/>
+               <functionlabels>
+				<functionlabel num="0" lockable="true">Lights</functionlabel>
+				<functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+				<functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+				<functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+				<functionlabel num="4" lockable="false">Brake</functionlabel>				
+                <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+                <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+                <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+				<functionlabel num="8" lockable="true">Injector</functionlabel>
+				<functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+				<functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+				<functionlabel num="11" lockable="false">Coupling</functionlabel>				
+                <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>	
+                <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+				<functionlabel num="14" lockable="true">Blower</functionlabel>
+                <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+				<functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+                <functionlabel num="17" lockable="true">Blow Down</functionlabel>				
+				<functionlabel num="18" lockable="false">Water Fill</functionlabel>
+				<functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+				<functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+				<functionlabel num="21" lockable="true">Aux 1</functionlabel>
+				<functionlabel num="22" lockable="true">Aux 2</functionlabel>
+				<functionlabel num="23" lockable="true">Aux 3</functionlabel>
+				<functionlabel num="24" lockable="true">Aux 4</functionlabel>
+				<functionlabel num="25" lockable="true">Activate Creep Mode</functionlabel>
+				<functionlabel num="26" lockable="true">Activate Coupling Mode</functionlabel>
+				<functionlabel num="27" lockable="false">Dynamic Brake</functionlabel>
+				<functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+			</functionlabels>
+            </model>
+        </family>                                                                  
       <family name="Ditch Light Decoder" mfg="KATO Precision Models" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">
         <model model="Ditch Light Decoder" numOuts="2" numFns="5">
           <output name="1" label="Ditch Lights" />

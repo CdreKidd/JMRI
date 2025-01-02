@@ -12,67 +12,68 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
-  <version author="Peter MacKenzie" version="1" lastUpdated="20130809"/>
-  <!-- Version 1.0 - based on DCC Concepts decoders by Nigel Cliffe & John Stather -->
-  <!--Version 1.1 - Updated Momentum Pane to align with DCC Concepts V12-->
+ 	<version author="Peter Fowler petefowler131@gmail.com" version="1" lastUpdated="20241213"/>
+    
+  <!-- Version 1.0 - based on DCC Concepts decoders by Nigel Cliffe & John Stather - -->
+  <!--Before I noted the issues raised by some about AE Model decoders I had already purchased several AE Model units so I needed a working definition. -->
+  <!--This definition is based heavily on the DCC Concepts Zen Black V12 tweaked to match AE Model Specifics-->
+  <!--The ABC section is not documented but the decoder accepts the inputs, unfortuantely I have means of testing it works irl-->
   <decoder>
-    <family name="Hattons DCC Loco Decoders" mfg="Hattons Model Railways">
-      <model model="MD4 4 Function" numOuts="4" numFns="14" lowVersionID="21" highVersionID="21" maxMotorCurrent="1.1A (peak=2A)">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+    <family name="AE Models Loco Decoders" mfg="AE Electronic Ltd">
+      <model model="AED-8PH 4 Function" numOuts="4" numFns="20" lowVersionID="0" highVersionID="255" maxMotorCurrent="0.75A (peak=1A)">
+        <output name="FoF" label="White" connection="solder" maxcurrent="100 mA"/> <!-- CV49-->
+        <output name="FoR" label="Yellow" connection="solder" maxcurrent="100 mA"/><!-- CV50-->
+        <output name="F1" label="Green" connection="solder" maxcurrent="100 mA"/><!-- CV51-->
+        <output name="F2" label="Purple" connection="solder" maxcurrent="100 mA"/><!-- CV52-->
+ <!--       <output name="F3" label="Pink" connection="solder" maxcurrent="100 mA"/>--><!-- CV53 6 function models-->
+ <!--       <output name="F4" label="Brown" connection="solder" maxcurrent="100 mA"/>--><!-- CV54 6 function models-->
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
-        <output name="BEMF"/>
+        <output name="BEMF"/><!-- CV61-->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable CV="1" item="Short Address" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Start voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255, CV3" comment="Range 0-255">
+      <variable CV="3" item="Accel" default="12" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-255, CV3" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel Base Rate (CV3)</label>
-        <comment>Range 0-255</comment>
+        <comment>Range 0-255 (default 12)</comment>
       </variable>
-      <variable CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV4" comment="Range 0-255">
+      <variable CV="4" item="Decel" default="12" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-255, CV4" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel Base Rate (CV4)</label>
-        <comment>Range 0-255</comment>
+        <comment>Range 0-255 (default 12)</comment>
       </variable>
       <variable CV="5" item="Vhigh" default="0" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Maximum Voltage</label>
         <comment>Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable CV="6" item="Vmid" default="0" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Midpoint Voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable CV="7" item="Decoder Version" readOnly="yes" tooltip="Decoder Version, Read Only">
+      <variable CV="7" item="Decoder Version" default="09" readOnly="yes" tooltip="Decoder Version, Read Only">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" default="79" tooltip="Decoder Maker, Read Only">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="169" tooltip="Decoder Maker, Read Only">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable CV="10" default="0" item="EMF Control Reference" tooltip="turn off BEMF above this speed step, range 0(default-128), CV10">
+      <variable CV="10" default="0" item="BEMF Feedback Cut-out  " tooltip="turn off BEMF above this speed step, range 0(default-128), CV10">
         <decVal/>
-        <label>BEMF Cut Out</label>
+        <label>BEMF Feedback Cut-out</label>
       </variable>
+      
       <variable CV="13" item="Analog Mode Function Status - FL(f)" mask="XXXXXXXV" default="1" minOut="2">
         <enumVal>
           <enumChoice choice="off">
@@ -82,9 +83,9 @@
             <choice>on</choice>
           </enumChoice>
         </enumVal>
-        <label>Analog Mode White/Yellow</label>
+        <label>Analog Mode White/Yellow FoF+FoR</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - FL(r)" mask="XXXXXXVX" default="1" minOut="3">
+      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXXVX" default="1" minOut="3">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -95,7 +96,7 @@
         </enumVal>
         <label>Analog Mode Green</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXVXX" default="1" minOut="4">
+      <variable CV="13" item="Analog Mode Function Status - F2" mask="XXXXXVXX" default="1" minOut="4">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -107,12 +108,26 @@
         <label>Analog Mode Purple</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18">
-        <longAddressVal/>
-        <label>Long Address</label>
+      
+  
+       
+      <variable CV="17" item="Extended Address High Byte" default="192" tooltip="Storing Long Addresses">
+                <decVal min="192" max="231"/>
+                <label>Extended Address High Byte</label>
+                <comment>Range 192-231</comment>
       </variable>
-
+      <variable CV="18" item="Extended Address Low Byte" default="100" tooltip="Storing Long Addresses">
+                <decVal min="1" max="255"/>
+                <label>Extended Address Low Byte</label>
+             <comment>Range 1-255</comment>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      
+                <variable CV="19" item="Consist setup" default="0" tooltip="Decoder based consist set up">
+                <decVal min="0" max="255"/>
+                <label>Extended Address Low Byte</label>
+                <comment>Default = 0 (Not part of a consist) Address range is 1-127 Add 128 to the address number to reverse direction of the locomotive.</comment>
+            </variable>
 
       <variable CV="21" item="Consist Address Active For F1" mask="XXXXXXXV" minOut="3" default="1">
         <enumVal>
@@ -136,6 +151,31 @@
         </enumVal>
         <label>Consist Address Active For Purple</label>
       </variable>
+      
+      <variable CV="21" item="Consist Address Active For F3" mask="XXXXXVXX" minOut="5" default="1">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For Brown</label>
+      </variable>
+      <variable CV="21" item="Consist Address Active For F4" mask="XXXXVXXX" minOut="6" default="1">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Address Active For Pink</label>
+      </variable>    
+  
+      
       <variable CV="22" item="Consist Address Active For FL in Forward" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
@@ -145,7 +185,7 @@
             <choice>Respond to Consist Address</choice>
           </enumChoice>
         </enumVal>
-        <label>Consist Address Active For White</label>
+        <label>Consist Address Active For White FoF</label>
       </variable>
       <variable CV="22" item="Consist Address Active For FL in Reverse" mask="XXXXXXVX" minOut="2">
         <enumVal>
@@ -156,8 +196,10 @@
             <choice>Respond to Consist Address</choice>
           </enumChoice>
         </enumVal>
-        <label>Consist Address Active For Yellow</label>
+        <label>Consist Address Active For Yellow FoR</label>
       </variable>
+      
+      
       <variable item="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">
         <decVal max="255"/>
         <label>Consist Acceleration Adjustment</label>
@@ -166,6 +208,8 @@
         <decVal max="255"/>
         <label>Consist Deceleration Adjustment</label>
       </variable>
+      <!-- CV 27 in ABC section-->
+
       <variable CV="29" item="Locomotive Direction" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="forward">
@@ -221,6 +265,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
+      <!-- Function Mapping -->
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
@@ -245,14 +290,18 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 1</label>
       </variable>
-      <variable item="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
+  
+
+<!--  <variable item="F5 controls output 1" CV="33" mask="XVXXXXXX" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 1</label>
       </variable>
       <variable item="F6 controls output 1" CV="33" mask="VXXXXXXX" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 1</label>
-      </variable>
+      </variable> -->
+      
+      
       <variable item="FL(f) controls output 2" CV="34" mask="XXXXXXXV" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
@@ -277,6 +326,8 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 2</label>
       </variable>
+      
+      <!--
       <variable item="F5 controls output 2" CV="34" mask="XVXXXXXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 2</label>
@@ -285,6 +336,8 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 2</label>
       </variable>
+      -->
+      
       <variable item="FL(f) controls output 3" CV="35" mask="XXXXXXXV" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 3</label>
@@ -309,14 +362,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 3</label>
       </variable>
-      <variable item="F5 controls output 3" CV="35" mask="XVXXXXXX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output 3</label>
-      </variable>
-      <variable item="F6 controls output 3" CV="35" mask="VXXXXXXX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output 3</label>
-      </variable>
+    
+
+      
+      
       <variable item="FL(f) controls output 4" CV="36" mask="XXXXXXXV" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 4</label>
@@ -341,13 +390,15 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 4</label>
       </variable>
-      <variable item="F5 controls output 4" CV="36" mask="XVXXXXXX" minOut="4">
+      
+      
+      <variable item="F5 controls output 3" CV="37" mask="XXXXXXXV" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output 4</label>
+        <label>F5 controls output 3</label>
       </variable>
-      <variable item="F6 controls output 4" CV="36" mask="VXXXXXXX" minOut="4">
+      <variable item="F6 controls output 4" CV="36" mask="XXXXXXVX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output 4</label>
+        <label>F6 controls output 3</label>
       </variable>
       <variable item="F7 controls output 3" CV="37" mask="XXXXXVXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -357,6 +408,8 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 3</label>
       </variable>
+      
+      <!--
       <variable item="F9 controls output 3" CV="37" mask="XXXVXXXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 3</label>
@@ -373,6 +426,15 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 3</label>
       </variable>
+      -->
+      <variable item="F5 controls output 4" CV="38" mask="XXXXXXXV" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5 controls output 4</label>
+      </variable>
+      <variable item="F6 controls output 4" CV="38" mask="XXXXXXVX" minOut="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6 controls output 4</label>
+      </variable>
       <variable item="F7 controls output 4" CV="38" mask="XXXXXVXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 4</label>
@@ -381,7 +443,8 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F8 controls output 4</label>
       </variable>
-      <variable item="F9 controls output 4" CV="38" mask="XXXVXXXX" minOut="4">
+      
+   <!--   <variable item="F9 controls output 4" CV="38" mask="XXXVXXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F9 controls output 4</label>
       </variable>
@@ -396,7 +459,9 @@
       <variable item="F12 controls output 4" CV="38" mask="VXXXXXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 4</label>
-      </variable>
+      </variable>-->
+      
+ 
       <variable CV="49" item="Output 1 effect generated" mask="XXXXVVVV">
         <enumVal>
           <enumChoice choice="Constant bright light">
@@ -677,14 +742,103 @@
         </enumVal>
         <label>Purple Wire Timing</label>
       </variable>
-      <variable CV="56" item="Dither frequency" default="3" tooltip="Range 1 (high) to 10 (low)">
-        <decVal/>
-        <label>Dither Frequency</label>
+      
+<!-- ABC CVs taken from DCC Concepts Zen Black instructions so may not apply-->
+      
+<!-- Decoder automatic stopping configuration -->
+  
+    <variable CV="27" item="ABC Configuration" mask="XXXXXVVV">
+        <enumVal>
+          <enumChoice choice="ADCC/ABC Off">
+            <choice>ADCC/ABC Off</choice>
+          </enumChoice>
+          <enumChoice choice="ABC Unit Left">
+            <choice>ABC Unit Left</choice>
+          </enumChoice>
+          <enumChoice choice="ABC Unit Right">
+            <choice>ABC Unit Right</choice>
+          </enumChoice>
+          <enumChoice choice="Both Rails Detected">
+            <choice>Both Rails Detected</choice>
+          </enumChoice>
+          <enumChoice choice="Auto Shuttle">
+            <choice>Auto Shuttle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>ABC Configuration</label>
       </variable>
-      <variable CV="57" item="Dither option" default="10" tooltip="Practical range is 5 (low) to 50 (high)">
-        <decVal/>
-        <label>Dither Amplitude</label>
+      
+      <variable CV="48" item="ABC Delay - leaving SLOW Section" default="15" tooltip="1-255 - 0.1sec steps">
+                <decVal min="1" max="255"/>
+                <label>ABC Delay - leaving SLOW Section</label>
+             <comment>Range 1-255 - 0.1sec steps</comment>
       </variable>
+      
+     <variable CV="55" item="ABC Decel Options" mask="XXXXXXVV">
+        <enumVal>
+          <enumChoice choice="0-Decel(CV4)">
+            <choice>0-Decel(CV4)</choice>
+          </enumChoice>
+          <enumChoice choice="1-Decel(CV58)">
+            <choice>1-Decel(CV58)</choice>
+          </enumChoice>
+          <enumChoice choice="2-Slow to Speed(CV57)">
+            <choice>2-Slow to Speed(CV57)</choice>
+          </enumChoice>
+          <enumChoice choice="3-Decel(CV58)+Speed(57)">
+            <choice>3-Decel(CV58)+Speed(57)</choice>
+          </enumChoice>
+         </enumVal>
+        <label>ABC Decel Options</label>
+      </variable>
+       <variable CV="56" item="ABC Shuttle" mask="XXXXXXVV">
+        <enumVal>
+          <enumChoice choice="0-Stop for Time(CV60))">
+            <choice>0-Intermediate Stations Stop for Time(CV60)</choice>
+          </enumChoice>
+          <enumChoice choice="1-Stop until released">
+            <choice>1-Intermediate StationStop until released</choice>
+          </enumChoice>
+          <enumChoice choice="2-Stop, Set Speed to ZERO">
+            <choice>2-Stop at Terminal, Set Speed to ZERO</choice>
+          </enumChoice>
+         </enumVal>
+  
+        <label>ABC Shuttle</label>
+      </variable>     
+
+      <variable CV="57" item="ABC SLOW Speed" default="12" tooltip="Sets Speed for SLOW section (Range 1-64)">
+        <decVal min="1" max="64"/>
+        <label>ABC SLOW Speed</label>
+        <comment>Sets Speed for SLOW section (Range 1-64)</comment>
+      </variable>
+      <variable CV="58" item="ABC Decel Rate" default="0" tooltip="Sets ABC Decel Rate">
+        <decVal min="1" max="255"/>
+        <label>ABC Decel Rate</label>
+        <comment>Sets ABC Decel Rate (1-255)</comment>
+      </variable>
+      <variable CV="59" item="ABC Shuttle Wait Time" default="5" tooltip="Sets wait time at end of shuttle (1-255 - 10sec to 42min)">
+        <decVal min="1" max="255"/>
+        <label>ABC Shuttle Wait Time</label>
+        <comment>Sets wait time at end of shuttle (1-255 - 10sec to 42min))</comment>
+      </variable>
+      <variable CV="60" item="ABC Intermediate Stop Wait Time" default="5" tooltip="Sets wait time at end of shuttle (1-255 - 10sec to 42min)">
+        <decVal min="1" max="255"/>
+        <label>ABC Intermediate Stop Wait Time</label>
+        <comment>Sets wait time at end of shuttle (1-255 - 10sec to 42min))</comment>
+      </variable>
+      
+      <variable CV="62" default="32" item="ABC Voltage Detection Threshold" tooltip="ABC voltage detection threshold (Range 4-64)">
+        <decVal min="4" max="64"/>
+        <label>ABC voltage detection threshold (Range 4-64)</label>
+        <label xml:lang="de">ABC-Modus "Empfindlichkeit"</label>
+        <label xml:lang="ca">Límit de detecció de voltatge sistema ABC</label>
+    </variable>
+    
+ <!-- End of ABC -->
+      
+      
+      <!--CV61 must always be an Odd Number for BEMF to be enabled-->
       <variable CV="61" item="EMF Enable" mask="XXXXXXXV" default="1" tooltip="Turn off/on(default) BEMF, CV61 least bit, enabling BEMF disables Dither">
         <enumVal>
           <enumChoice choice="Disabled">
@@ -705,9 +859,9 @@
             <choice>Enabled</choice>
           </enumChoice>
         </enumVal>
-        <label>Enable BEMF button control</label>
+        <label>Enable Button Control of BEMF</label>
       </variable>
-      <variable CV="61" item="Directional Headlights" mask="XXXVXXXX">
+      <variable CV="61" item="Directional Headlights" mask="XXXVXXXX" default="0"  tooltip="Disable(default)/Enable Headlight Dim When Stopped, CV61 '16' bit">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -718,7 +872,7 @@
         </enumVal>
         <label>Headlight Dim When Stopped</label>
       </variable>
-      <variable CV="61" item="Global lighting option 1" mask="XXVXXXXX">
+      <variable CV="61" item="Global lighting option 1" mask="XXVXXXXX" default="0" tooltip="Disable(default)/Enable Opposite Headlight Dim When Stopped, CV61 '32' bit">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -729,7 +883,7 @@
         </enumVal>
         <label>Opposite Headlight Dim</label>
       </variable>
-      <variable CV="61" item="EMF Static Config" mask="XVXXXXXX" tooltip="Motor controlled by Function button">
+      <variable CV="61" item="EMF Static Config" mask="XVXXXXXX" default="0" tooltip="Motor controlled by Function button CV61 '64' bit">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -740,7 +894,7 @@
         </enumVal>
         <label>Motor Button Control</label>
       </variable>
-      <variable CV="61" item="EMF Dynamic Config" mask="XXXXXVXX" tooltip="If motor button control is active, CV61 ">
+      <variable CV="61" item="EMF Dynamic Config" mask="XXXXXVXX" default="0" tooltip="If motor button control is active, CV61 '4bit'">
         <enumVal>
           <enumChoice choice="Manual F2 for, F3 rev">
             <choice>Manual F2 for, F3 rev</choice>
@@ -751,10 +905,9 @@
         </enumVal>
         <label>Button Control Direction</label>
       </variable>
-      <variable CV="62" item="Function 3 effect generated" default="60" tooltip="1 second = 60 to 4 seconds = 255">
-        <decVal/>
-        <label>Momentary Pulse</label>
-      </variable>
+      
+      
+ 
       <variable CV="63" item="Function 2 effect generated" default="10" tooltip="1 second = about 12">
         <decVal/>
         <label>Ditch Light Blink Holdover Time</label>
@@ -763,6 +916,9 @@
         <decVal/>
         <label>Dimming Brightness</label>
       </variable>
+      
+  
+      
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
@@ -932,50 +1088,56 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Ditch</label>
       </variable>
-      <variable item="Decel Rate 4 End Point" CV="125" default="0" tooltip="Sets the Decel Rate 4 End Point, range 0(default)-255, CV125" comment="Range 0-255">
+      
+      <!--Advanced Momentum Definitions-->
+      <variable item="Decel 5 Rate End Point" CV="125" default="0" tooltip="Sets the Decel 5 Rate End Point, range 0(default)-255, CV125" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Decel 5 Rate End Point</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Decel 5 Rate" CV="126" default="0" tooltip="Sets the Decel 5 Rate, range 0(default)-255, CV126" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Decel 5 Rate</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable item="Decel 4 Rate End Point" CV="127" default="0" tooltip="Sets the Decel 4 Rate End Point, range 0(default)-255, CV127" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel 4 Rate End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel Rate 4" CV="126" default="0" tooltip="Sets the Decel Rate 4, range 0(default)-255, CV126" comment="Range 0-255">
+      <variable item="Decel 4 Rate" CV="128" default="0" tooltip="Sets the Decel 4 Rate, range 0(default)-255, CV128" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel Rate 4</label>
+        <label>Decel 4 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel 5 Rate End Point" CV="127" default="0" tooltip="Sets the Decel Rate 5 End Point, range 0(default)-255, CV127" comment="Range 0-255">
+      <variable item="Accel 2 Rate Start Point" CV="129" default="0" tooltip="Sets the Accel 2 Rate Start point, range 0(default)-255, CV129" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel Rate 5 End Point</label>
+        <label>Accel 2 Rate Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel Rate 5" CV="128" default="0" tooltip="Sets the Decel Rate 5, range 0(default)-255, CV128" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Decel Rate 5</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Accel Rate 2 Start Point" CV="129" default="0" tooltip="Sets the Accel Rate 2 Start point, range 0(default)-255, CV129" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Accel Rate 2 Start Point</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Accel Rate 2" CV="130" default="0" tooltip="Sets the Accel Rate 2, range 0(default)-255, CV130" comment="Range 0-255">
+      <variable item="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 2 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel Rate 3 Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
+      <variable item="Accel 3 Rate Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 3 Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel Rate 3" CV="132" default="0" tooltip="Sets the Accel Rate 3, range 0(default)-255, CV132" comment="Range 0-255">
+      <variable item="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 Rate, range 0(default)-255, CV132" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Accel Rate 3</label>
+        <label>Accel 3 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
+      
+      
       <variable CV="133" item="EMF Droop Config" default="255" tooltip="If button control of motor is active, range 0-255, CV133">
         <decVal/>
         <label>Power to button controlled motor</label>
       </variable>
+      
+      
       <variable item="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output Motor</label>
@@ -1000,6 +1162,8 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output Motor</label>
       </variable>
+      
+      <!--
       <variable item="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output Motor</label>
@@ -1007,11 +1171,14 @@
       <variable item="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Motor</label>
-      </variable>
-      <variable CV="135" item="Function 4 effect generated" default="16" tooltip="Random Flicker for fireboxes">
+      </variable>-->
+      
+      <!-- item named to fit lighting pane definition-->
+      <variable CV="135" item="Function 4 effect generated" default="32" tooltip="Random Flicker for fireboxes">
         <decVal/>
         <label>Random Flicker Control</label>
       </variable>
+      
       <variable item="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output BEMF</label>
@@ -1045,103 +1212,86 @@
         <label>F12 controls output BEMF</label>
       </variable>
     </variables>
+    
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane> 
-    <name>Momentum</name>
+  
+  
+  <pane>
+     <name>Momentum</name>
     <column>
-      <label>
-        <text>If Acceleration Rates 2 &amp; 3 and Deceleration Rates 5 &amp; 4 are all set to zero,</text>
-      </label>
-      <label>
-        <text>then Base accel/decel rates (CV3 &amp; CV4) apply to the whole speed range.</text>
-      </label>
-      <label><text> </text></label>
-      <label><text> </text></label>
-      <row>
-        <display item="Accel Rate 2 Start Point" layout="above" label=""/>
-	<label><text> </text></label>
-        <display item="Accel Rate 2 Start Point" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Accel Rate 3 Start Point" layout="above" label=""/>
-	<label><text> </text></label>
-        <display item="Accel Rate 3 Start Point" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-           <label><text> </text></label>
-                 <label><text> </text></label>
-                       <label><text> </text></label>
-      <row>
-        <display item="Decel Rate 4 End Point" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Decel Rate 4 End Point" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Decel Rate 5 End Point" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Decel Rate 5 End Point" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <label><text> </text></label>
-      <label><text> </text></label>
+      <label label="If Accel 2, 3 and Decel 4, 5 are all set to zero,"/>
+      <label label="base rates (CV3,CV4) apply to whole speed range"/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Accel 2 Rate Start Point" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Accel 2 Rate Start Point"/>
+      <label label=" "/>
+      <display item="Accel 3 Rate Start Point" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Accel 3 Rate Start Point"/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Decel 4 Rate End Point" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Decel 4 Rate End Point"/>
+      <label label=" "/>
+      <display item="Decel 5 Rate End Point" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Decel 5 Rate End Point"/>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
     </column>
     <column>
-      <label><text> </text></label>
-      <label><text> </text></label>     <label><text> </text></label>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Accel Base Rate (CV3)"/>
+       
 
-      <row>
-        <display item="Accel" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Accel" layout="above" label="Base Acceleration Rate" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Accel Rate 2" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Accel Rate 2" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Accel Rate 3" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Accel Rate 3" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
+      <label label=" "/>
+      <display item="Accel 2 Rate" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Accel 2 Rate"/>
+      <label label=" "/>
+      <display item="Accel 3 Rate" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Accel 3 Rate"/>
+      <label label=" "/>
+      <label label=" "/>
+      <display item="Decel 4 Rate" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Decel 4 Rate"/>
+      <label label=" "/>
+      <display item="Decel 5 Rate" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Decel 5 Rate"/>
+      <label label=" "/>
 
- 
-      <row>
-        <display item="Decel Rate 4" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Decel Rate 4" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Decel Rate 5" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Decel Rate 5" layout="above" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <row>
-        <display item="Decel" layout="above" label=""/>
-        <label><text> </text></label>
-        <display item="Decel" layout="above" label="Base Deceleration Rate" format="hslider"/>
-      </row>
-      <label><text> </text></label>
-      <label><text> </text></label>
+      <display item="Decel Base Rate (CV4)"/>
+      <label label=" "/>
+      <label label=" "/>
     </column>
   </pane>
   <pane>
     <name>Decoder Locking</name>
     <column>
-      <label label="Hattons Model Railways decoders offer a decoder locking mechanism"/>
+      <label label="AE Models decoders offer a decoder locking mechanism"/>
       <label label="which can be useful when several decoders are used in one loco"/>
       <label label="on the same address, e.g. for adding sound"/>
-      <label label="Hattons Model Railways suggests values of 1=mobile, 2=sound, 3=light/function only"/>
+      <label label="AE Models suggests values of 1=mobile, 2=sound, 3=light/function only"/>
       <label label=" "/>
       <display item="Decoder Lock ID number"/>
       <label label="Set CV15 equal to this number to unlock the decoder for programming"/>
@@ -1149,4 +1299,52 @@
       <label label="To use the Decoder Lock (CV15) must be set manually from the single CV programmer, or make use of the multi-decoder tool"/>
     </column>
   </pane>
+<pane>
+  <name>ABC Breaking</name>
+  <column>
+     <label label="ABC Breaking Settings taken from DCC Concepts Zen V.12 Manual"/>
+      <label label="so may not work - I don't have capability to test atm"/>
+      <label label="so offered as potentially correct"/>
+    <separator/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ABC Configuration"/>
+     <display item="ABC Decel Options"/>
+       <display item="ABC Shuttle"/>
+     
+     <display item="ABC Decel Rate" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="ABC Decel Rate"/>
+      
+      <display item="ABC Delay - leaving SLOW Section" format="hslider" label="" >
+        <label/>
+      </display>
+      <display item="ABC Delay - leaving SLOW Section"/>
+     
+      <display item="ABC SLOW Speed" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="ABC SLOW Speed"/>
+      
+      <display item="ABC Shuttle Wait Time" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="ABC Shuttle Wait Time"/>
+
+      <display item="ABC Intermediate Stop Wait Time" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="ABC Intermediate Stop Wait Time"/>
+      
+      <display item="ABC Voltage Detection Threshold" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="ABC Voltage Detection Threshold"/>
+
+  </column>
+</pane>
+ 
 </decoder-config>
+
